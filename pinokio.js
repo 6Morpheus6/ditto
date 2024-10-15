@@ -2,7 +2,7 @@ const path = require('path')
 module.exports = {
   version: "2.0",
   title: "ditto",
-  description: "",
+  description: "the simplest self-building coding agent https://github.com/yoheinakajima/ditto",
   icon: "icon.jpeg",
   menu: async (kernel, info) => {
     let installed = info.exists("app/env")
@@ -10,7 +10,8 @@ module.exports = {
       install: info.running("install.js"),
       start: info.running("start.js"),
       update: info.running("update.js"),
-      reset: info.running("reset.js")
+      reset: info.running("reset.js"),
+      n: info.running("new.js")
     }
     if (running.install) {
       return [{
@@ -55,12 +56,23 @@ module.exports = {
           text: "Resetting",
           href: "reset.js",
         }]
+      } else if (running.n) {
+        return [{
+          default: true,
+          icon: "fa-solid fa-fa-arrow-rotate-right",
+          text: "Restarting...",
+          href: "new.js",
+        }]
       } else {
         return [{
           default: true,
           icon: "fa-solid fa-power-off",
           text: "Start",
           href: "start.js",
+        }, {
+          icon: "fa-solid fa-arrow-rotate-right",
+          text: "Start a new app",
+          href: "new.js"
         }, {
           icon: "fa-solid fa-plug",
           text: "Update",
